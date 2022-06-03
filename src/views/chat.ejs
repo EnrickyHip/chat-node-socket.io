@@ -3,23 +3,49 @@
 
   <%- include("includes/head") %>
 
-  <body>
+  <body class="vh-100">
     <%- include("includes/navbar") %>
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-3"></div>
+        <div style="background-color: #AFD4E1;" class="col-3 min-vh-100 my-5 py-3">
+          <h3>Participantes:</h3>
+        </div>
 
-
-        <div class="col-lg-6 my-4">
-          Bem vindo <%= user.name %>!
+        <div class="col-6 my-5 py-3">
 
         </div>
 
-        <div class="col-lg-3"></div>
+        <div style="background-color: #AFD4E1;" class="col-3 min-vh-100"></div>
       </div>
     </div>
 
+    <div class="fixed-bottom">
+      <nav class="navbar navbar-expand-lg bg-primary dark">
+
+        <div class="container">
+          <div class="row w-100">
+
+            <form>
+              <div class="col-12 w-50 m-auto">
+                <div class="input-group">
+                  <input type="text" class="form-control mx-2" placeholder="Mensagem">
+                  <span class="input-group-btn">
+                    <button class="btn btn-light" type="button">send</button>
+                  </span>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+      </nav>
+    </div>
+
     <%- include("includes/scripts") %>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="./assets/js/chat.js"></script>
   </body>
 </html>

@@ -8,6 +8,10 @@ const mongoose = require("mongoose");
 //const csrf = require("csurf");
 
 const app = express();
+const http = require("http");
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
 //const { checkCsrfError, csrfMiddleware } = require("./src/middlewares/csrfMiddlewares");
 
@@ -46,6 +50,7 @@ app.use(express.static(path.resolve(__dirname, "public")));
 //middlewares do CSRF, serão executados toda vez que uma nova rota é requerida. Caso o formulário venha de fora do site, o middleware checkCsrfError irá mostrar um erro, para evitar isso em formulários do site basta adicionar ao formulário: <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
 //app.use(checkCsrfError);
+
 //app.use(csrfMiddleware);
 app.use(globalMiddleware);
 app.use(routes);
@@ -54,7 +59,16 @@ app.set("views", path.resolve(__dirname, "src", "views")); //define a pasta das 
 app.set("view engine", "ejs"); //define a engine utilizada
 
 app.on("ready", () => {
-  app.listen(3000, () => {
+  server.listen(3000, () => {
     console.log("starting server at: http://localhost:3000");
+  });
+});
+
+io.on("connection", (socket) => {
+  // console.log("socket: ", socket);
+  console.log("a user connected");
+
+  socket.on("disconnect", () => {
+    console.log("the user disconnected");
   });
 });

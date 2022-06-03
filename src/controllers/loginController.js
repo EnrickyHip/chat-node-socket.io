@@ -18,11 +18,11 @@ exports.login = async (request, response) => {
 
     if (login.user) {
       request.session.user = login.user;
-      response.session.save(() => response.redirect("/chat"));
+      request.session.save(() => response.redirect("/chat"));
       return;
     }
   } catch (error) {
-    console.log("error");
+    console.log(error);
     response.render("404");
   }
 };
