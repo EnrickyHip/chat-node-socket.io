@@ -6,8 +6,29 @@
 <body>
   <%- include('./includes/navbar.ejs') %>
 
+  <h1 class="text-center mt-4">Bem vindo ao Multiroom chat!</h1>
 
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3"></div>
 
-    <%- include('./includes/scripts') %>
+        <div class="col-lg-6 my-4 text-center">
+
+          <div class="my-5">
+            <h3 class="my-4">Registre-se no chat: </h3>
+            <a href="/register" class="btn btn-primary">Registrar-se</a>
+          </div>
+
+          <div class="my-5">
+            <h3 class="my-4">Caso já tenha uma conta, logue sua conta: </h3>
+            <a href="/login" class="btn btn-primary">Logar-se</a>
+          </div>
+
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+    </div>
+
+  <%- include('./includes/scripts') %>
 </body>
 </html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+  <%- include("includes/head") %>
+
+  <body>
+    <%- include("includes/navbar") %>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3"></div>
+
+
+        <div class="col-lg-6 my-4">
+          <h1 class="text-center">Registrar</h1>
+          <p class="text-center lead">Registre-se no site</p>
+
+          <%- include("includes/errorMEssages") %>
+
+          <div class="row my-4 p-0">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <form action="/register" method="post" id="register-form">
+                <!-- <input type="hidden" name="_csrf" value="<%# csrfToken %>"> -->
+                <div class="mb-3">
+                  <label for="name" class="form-label">Nome</label>
+                  <input value="<%= values.name %>" type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" >
+                  <div id="register-name-message" class="invalid-feedback"></div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input value="<%= values.email %>" type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" >
+                  <div id="register-email-message" class="invalid-feedback"></div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="password" class="form-label">Senha</label>
+                  <input value="<%= values.password %>" type="password" name="password" class="form-control" id="password">
+                  <div id="register-password-message" class="invalid-feedback"></div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="confirm-password" class="form-label">Confirmar senha</label>
+                  <input value="<%= values.confirmPassword %>" type="password" name="confirmPassword" class="form-control" id="confirm-password">
+                  <div id="register-confirm-password-message" class="invalid-feedback"></div>
+                </div>
+
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" id="check-me">
+                  <label class="form-check-label" name="check-me" for="check-me">Check me</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary mb-3">Registrar</button>
+                <div class="col-2"></div>
+
+                <div>
+                  <span>Já tem conta?</span>
+                  <a href="/login">clique aqui para logar</a>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3"></div>
+      </div>
+    </div>
+
+    <%- include("includes/scripts") %>
+  </body>
+</html>
