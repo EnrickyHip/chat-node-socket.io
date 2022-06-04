@@ -18,6 +18,7 @@ exports.login = async (request, response) => {
 
     if (login.user) {
       request.session.user = login.user;
+      request.app.get("io").emit("enter chat", login.user.name);
       request.session.save(() => response.redirect("/chat"));
       return;
     }
@@ -28,6 +29,7 @@ exports.login = async (request, response) => {
 };
 
 exports.logout = (request, response) => {
+  request.app.get("io").emit("exit chat", request.session.user.name);
   request.session.destroy();
   response.redirect("/");
 };

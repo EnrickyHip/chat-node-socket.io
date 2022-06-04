@@ -1,0 +1,8 @@
+.dialog {
+  overflow-wrap: break-word;
+  max-width: 70%;
+}
+
+body, html {
+  height: 100%;
+}

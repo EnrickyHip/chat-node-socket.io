@@ -18,6 +18,7 @@ exports.register = async (request, response) => {
 
     if (register.user) {
       request.session.user = register.user;
+      request.app.get("io").emit("enter chat", register.user.name);
       request.session.save(() => response.redirect("/chat"));
       return;
     }

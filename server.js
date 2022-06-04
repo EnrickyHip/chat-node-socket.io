@@ -12,6 +12,7 @@ const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+const socket = require("./socket.io");
 
 //const { checkCsrfError, csrfMiddleware } = require("./src/middlewares/csrfMiddlewares");
 
@@ -57,18 +58,11 @@ app.use(routes);
 
 app.set("views", path.resolve(__dirname, "src", "views")); //define a pasta das views
 app.set("view engine", "ejs"); //define a engine utilizada
+app.set("io", io);
 
 app.on("ready", () => {
   server.listen(3000, () => {
     console.log("starting server at: http://localhost:3000");
-  });
-});
-
-io.on("connection", (socket) => {
-  // console.log("socket: ", socket);
-  console.log("a user connected");
-
-  socket.on("disconnect", () => {
-    console.log("the user disconnected");
+    socket(io);
   });
 });
