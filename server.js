@@ -3,16 +3,17 @@ const express = require("express");
 const path = require("path");
 const routes = require("./routes");
 const mongoose = require("mongoose");
+const http = require("http");
 
+const socket = require("./socket.io");
 //const helmet = require("helmet");
 //const csrf = require("csurf");
 
 const app = express();
-const http = require("http");
+
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-const socket = require("./socket.io");
 
 //const { checkCsrfError, csrfMiddleware } = require("./src/middlewares/csrfMiddlewares");
 
@@ -58,6 +59,7 @@ app.use(routes);
 
 app.set("views", path.resolve(__dirname, "src", "views")); //define a pasta das views
 app.set("view engine", "ejs"); //define a engine utilizada
+
 app.set("io", io);
 
 app.on("ready", () => {

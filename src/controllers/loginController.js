@@ -17,8 +17,12 @@ exports.login = async (request, response) => {
     }
 
     if (login.user) {
+      const io = request.app.get("io");
+
+      io.users.push({ name: login.user.name, email: login.user.email, status: "Online" });
+      io.emit("enter chat", { name: login.user.name, email: login.user.email });
+
       request.session.user = login.user;
-      request.app.get("io").emit("enter chat", login.user.name);
       request.session.save(() => response.redirect("/chat"));
       return;
     }
@@ -29,7 +33,12 @@ exports.login = async (request, response) => {
 };
 
 exports.logout = (request, response) => {
-  request.app.get("io").emit("exit chat", request.session.user.name);
+  const io = request.app.get("io");
+
+  io.emit("exit chat", request.session.user);
+  io.users = io.users.filter((user) => user.email !== request.session.user.email);
+  io.emit("add users status", io.users);
+
   request.session.destroy();
   response.redirect("/");
 };
