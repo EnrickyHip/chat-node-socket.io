@@ -11,20 +11,22 @@ export default function () {
   const username = document.querySelector("#user").value;
   const email = document.querySelector("#email").value;
 
+  let timer;
+
   messageButton.addEventListener("click", sendMessage);
+  messageInput.addEventListener("input", () => {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      socket.emit("stop typing", { name: username, email });
+    }, 700);
+
+    socket.emit("typing", { name: username, email });
+  });
+
   messageInput.addEventListener("keypress", (event) => {
     if (event.key === "Enter") sendMessage();
   });
-
-  async function sendMessage() {
-    if (messageInput.value.length) {
-      addMessage(username, messageInput.value);
-      socket.emit("send message", { name: username, message: messageInput.value });
-
-      messageInput.value = "";
-      messageInput.focus();
-    }
-  }
 
   socket.emit("user connected", { name: username, email });
 
@@ -60,15 +62,25 @@ export default function () {
   function addMessage(name, message) {
     //eslint-disable-next-line
     messagesContainer.innerHTML +=
-     `<div class="d-flex ${username === name ? "justify-content-end" : ""}">
+    `<div class="d-flex ${username === name ? "justify-content-end" : ""}">
         <div class="bg-primary p-2  my-2 rounded-2 text-light dialog">
-          ${username === name ? "" : `<h6>${name}</h6>`}
+        ${username === name ? "" : `<h6>${name}</h6>`}
           <p class="fs-6 m-0">
-            <small>
+          <small>
               ${message}
-            </small>
-          </p>
+              </small>
+              </p>
         </div>
-      </div>`;
+        </div>`;
+  }
+
+  function sendMessage() {
+    if (messageInput.value.length) {
+      addMessage(username, messageInput.value);
+      socket.emit("send message", { name: username, message: messageInput.value });
+
+      messageInput.value = "";
+      messageInput.focus();
+    }
   }
 }

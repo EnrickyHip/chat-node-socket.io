@@ -2,7 +2,7 @@
   "name": "webpack-model",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "dev": "webpack -w",
     "start": "nodemon server.js --ignore public --ignore frontend"

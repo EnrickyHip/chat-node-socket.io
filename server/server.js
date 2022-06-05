@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-const routes = require("./routes");
+const routes = require("../routes");
 const mongoose = require("mongoose");
 const http = require("http");
 
@@ -26,7 +26,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo"); //MongoStore guarda as sessões no banco de dados
 const flash = require("connect-flash");
 
-const globalMiddleware = require("./src/middlewares/globalMiddleware");
+const globalMiddleware = require("../src/middlewares/globalMiddleware");
 
 const sessionOptions = session({
   secret: "segredinho hihi",
@@ -45,7 +45,7 @@ app.use(sessionOptions);
 
 app.use(express.urlencoded({ extended: true })); // nos permite postar forms pra dentro do site
 app.use(express.json());
-app.use(express.static(path.resolve(__dirname, "public")));
+app.use(express.static(path.resolve(__dirname, "..", "public")));
 
 //app.use(csrf()); CSRF evita a postagem de formulários vindos de fora do próprio site. é recomendado que seja desativado durante o desenvolvimento.
 
@@ -57,7 +57,7 @@ app.use(express.static(path.resolve(__dirname, "public")));
 app.use(globalMiddleware);
 app.use(routes);
 
-app.set("views", path.resolve(__dirname, "src", "views")); //define a pasta das views
+app.set("views", path.resolve(__dirname, "..", "src", "views")); //define a pasta das views
 app.set("view engine", "ejs"); //define a engine utilizada
 
 app.set("io", io);

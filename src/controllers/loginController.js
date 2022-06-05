@@ -19,7 +19,7 @@ exports.login = async (request, response) => {
     if (login.user) {
       const io = request.app.get("io");
 
-      io.users.push({ name: login.user.name, email: login.user.email, status: "Online" });
+      io.users.addUser(login.user);
       io.emit("enter chat", { name: login.user.name, email: login.user.email });
 
       request.session.user = login.user;
@@ -36,8 +36,8 @@ exports.logout = (request, response) => {
   const io = request.app.get("io");
 
   io.emit("exit chat", request.session.user);
-  io.users = io.users.filter((user) => user.email !== request.session.user.email);
-  io.emit("add users status", io.users);
+  io.users.removeUser(request.session.user);
+  io.emit("add users status", io.users.users);
 
   request.session.destroy();
   response.redirect("/");

@@ -20,7 +20,7 @@ exports.register = async (request, response) => {
       request.session.user = register.user;
 
       const io = request.app.get("io");
-      io.users.push({ name: register.user.name, email: register.user.email, status: "Online" });
+      io.users.addUser(register.user);
       io.emit("enter chat", { name: register.user.name, email: register.user.email });
 
       request.session.save(() => response.redirect("/chat"));
