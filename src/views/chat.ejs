@@ -8,18 +8,20 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div style="background-color: hsl(196, 45%, 78%);" class="col-3 min-vh-100">
-          <h4 class="pt-5 mt-4">Participantes:</h4>
-          <div id="participants-container">
+        <div style="background-color: hsl(196, 45%, 78%);" class="col-lg-3 col-md-3 col-sm-2 col-1 min-vh-100">
+          <div id="participants">
+            <h4 class="pt-5 mt-4">Participantes:</h4>
+            <div id="participants-container">
 
+            </div>
           </div>
         </div>
 
-        <div class="col-6 my-5 py-4">
+        <div class="col-lg-6 my-5 py-4 col-md-6 col-sm-8 col-10">
           <div id="messages-container"></div>
         </div>
 
-        <div style="background-color: #AFD4E1;" class="col-3 min-vh-100"></div>
+        <div style="background-color: #AFD4E1;" class="col-lg-3 col-md-3 col-sm-2 col-1 min-vh-100"></div>
       </div>
     </div>
 
@@ -29,7 +31,9 @@
         <div class="container">
           <div class="row w-100">
 
-            <div class="col-12 w-50 m-auto">
+            <div class="col-lg-3 col-md-2"></div>
+
+            <div class="col-lg-6 col-md-8">
               <div class="input-group">
                 <input type="hidden" id="user" value="<%= user.name %>" >
                 <input type="hidden" id="email" value="<%= user.email %>" >
@@ -39,6 +43,8 @@
                 </span>
               </div>
             </div>
+
+            <div class="col-lg-3 col-md-2"></div>
 
           </div>
         </div>

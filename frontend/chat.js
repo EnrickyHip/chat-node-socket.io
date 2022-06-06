@@ -49,7 +49,6 @@ export default function () {
   });
 
   socket.on("add users status", (users) => {
-    console.log("entrou aqui");
     participantsContainer.innerHTML = `<p id="${email}" class="m-1">Você</p>`;
 
     users.forEach((user) => {
@@ -61,17 +60,17 @@ export default function () {
   //kinda simulation of jsx idk ahahahashahaahhaah
   function addMessage(name, message) {
     //eslint-disable-next-line
-    messagesContainer.innerHTML +=
-    `<div class="d-flex ${username === name ? "justify-content-end" : ""}">
+    messagesContainer.innerHTML += `
+      <div class="d-flex ${username === name ? "justify-content-end" : ""}">
         <div class="bg-primary p-2  my-2 rounded-2 text-light dialog">
-        ${username === name ? "" : `<h6>${name}</h6>`}
+          ${username === name ? "" : `<h6>${name}</h6>`}
           <p class="fs-6 m-0">
-          <small>
+            <small>
               ${message}
-              </small>
-              </p>
+            </small>
+          </p>
         </div>
-        </div>`;
+      </div>`;
   }
 
   function sendMessage() {

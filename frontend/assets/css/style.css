@@ -3,6 +3,12 @@
   max-width: 70%;
 }
 
+@media (max-width: 768px) {
+  #participants{
+    display: none !important;
+  }
+}
+
 body, html {
   height: 100%;
 }
