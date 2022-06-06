@@ -33,7 +33,6 @@ export default function () {
   socket.on("enter chat", (user) => {
     messagesContainer.innerHTML += `<h6 class="text-center my-2">${user.name} entrou no chat</h6>`;
     socket.emit("add user", user);
-    // participantsContainer.innerHTML += `<p class="m-1" id="${user.email}">${user.name}: Online</p>`;
     window.scrollTo(0, document.body.scrollHeight);
   });
 
@@ -57,7 +56,7 @@ export default function () {
     });
   });
 
-  //kinda simulation of jsx idk ahahahashahaahhaah
+  //kinda simulation of jsx idk
   function addMessage(name, message) {
     //eslint-disable-next-line
     messagesContainer.innerHTML += `

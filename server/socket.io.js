@@ -17,8 +17,6 @@ module.exports = (io) => {
     });
 
     socket.on("send message", (user) => {
-      //io.emit("add message", { ...data }); //send for all users
-      //socket.emit("add message", { ...data });
       socket.broadcast.emit("add message", { ...user }); //broadcast emit for everyone excepts the user who sent it.
     });
 
