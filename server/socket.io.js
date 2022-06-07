@@ -16,8 +16,8 @@ module.exports = (io) => {
       io.emit("add users status", io.users.users);
     });
 
-    socket.on("send message", (user) => {
-      socket.broadcast.emit("add message", { ...user }); //broadcast emit for everyone excepts the user who sent it.
+    socket.on("send message", (message) => {
+      socket.broadcast.emit("add message", { ...message }); //broadcast emit for everyone excepts the user who sent it.
     });
 
     socket.on("typing", (user) => {

@@ -4,7 +4,9 @@ module.exports = class Users {
   }
 
   addUser(user) {
-    this.users.push({ name: user.name, email: user.email, status: "Online" });
+    if (!this.userIsOnChat(user)) {
+      this.users.push({ name: user.name, email: user.email, status: "Online" });
+    }
   }
 
   removeUser(userToRemove) {
@@ -17,5 +19,9 @@ module.exports = class Users {
         user.status = status;
       }
     });
+  }
+
+  userIsOnChat(userToTest) {
+    return this.users.filter((user) => user.email === userToTest.email).length;
   }
 };

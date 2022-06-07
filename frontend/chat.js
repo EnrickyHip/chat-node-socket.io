@@ -1,7 +1,6 @@
 export default function () {
   //eslint-disable-next-line no-undef
   const socket = io("http://localhost:3000");
-  //const socket = io("");
 
   const messagesContainer = document.querySelector("#messages-container");
   const participantsContainer = document.querySelector("#participants-container");
@@ -11,9 +10,16 @@ export default function () {
   const username = document.querySelector("#user").value;
   const email = document.querySelector("#email").value;
 
+  messageInput.focus();
+
   let timer;
 
   messageButton.addEventListener("click", sendMessage);
+
+  messageInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") sendMessage();
+  });
+
   messageInput.addEventListener("input", () => {
     clearTimeout(timer);
 
@@ -24,26 +30,20 @@ export default function () {
     socket.emit("typing", { name: username, email });
   });
 
-  messageInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") sendMessage();
-  });
-
   socket.emit("user connected", { name: username, email });
 
   socket.on("enter chat", (user) => {
     messagesContainer.innerHTML += `<h6 class="text-center my-2">${user.name} entrou no chat</h6>`;
-    socket.emit("add user", user);
     window.scrollTo(0, document.body.scrollHeight);
   });
 
   socket.on("exit chat", (user) => {
     messagesContainer.innerHTML += `<h6 class="text-center my-2">${user.name} saiu do chat</h6>`;
     window.scrollTo(0, document.body.scrollHeight);
-    socket.emit("remove user", user);
   });
 
-  socket.on("add message", (user) => {
-    addMessage(user.name, user.message);
+  socket.on("add message", (message) => {
+    addMessage(message.name, message.text, message.date);
     window.scrollTo(0, document.body.scrollHeight);
   });
 
@@ -57,15 +57,18 @@ export default function () {
   });
 
   //kinda simulation of jsx idk
-  function addMessage(name, message) {
+  function addMessage(name, message, date) {
     //eslint-disable-next-line
     messagesContainer.innerHTML += `
-      <div class="d-flex ${username === name ? "justify-content-end" : ""}">
-        <div class="bg-primary p-2  my-2 rounded-2 text-light dialog">
-          ${username === name ? "" : `<h6>${name}</h6>`}
+      <div class="d-flex my-1 ${username === name ? "justify-content-end" : ""}">
+        <div class="bg-primary p-1 px-2 rounded-2 text-light dialog">
+          ${username === name ? "" : `<h6 class="mb-0 fs-6">${name}</h6>`}
           <p class="fs-6 m-0">
-            <small>
+            <small class="pe-2">
               ${message}
+            </small>
+            <small style="font-size: 9px;" class="text-light">
+              ${date}
             </small>
           </p>
         </div>
@@ -74,8 +77,10 @@ export default function () {
 
   function sendMessage() {
     if (messageInput.value.length) {
-      addMessage(username, messageInput.value);
-      socket.emit("send message", { name: username, message: messageInput.value });
+      const date = new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+
+      addMessage(username, messageInput.value, date);
+      socket.emit("send message", { name: username, text: messageInput.value, date });
 
       messageInput.value = "";
       messageInput.focus();
