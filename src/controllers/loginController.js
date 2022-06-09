@@ -18,11 +18,15 @@ exports.login = async (request, response) => {
 
     if (login.user) {
       const io = request.app.get("io");
+      const date = new Date();
+      const user = { name: login.user.name, email: login.user.email };
+      const message = { user, text: "entrou no chat", type: "main", date };
 
-      io.users.addUser(login.user);
-      io.emit("enter chat", { name: login.user.name, email: login.user.email });
+      io.users.addUser({ ...user, status: "Online" });
+      io.messages.addMessage(message);
+      io.emit("add-main-message", message);
 
-      request.session.user = login.user;
+      request.session.user = user;
       request.session.save(() => response.redirect("/chat"));
       return;
     }
@@ -32,12 +36,15 @@ exports.login = async (request, response) => {
   }
 };
 
-exports.logout = (request, response) => {
+exports.logout = async (request, response) => {
   const io = request.app.get("io");
+  const date = new Date();
+  const message = { user: request.session.user, text: "saiu do chat", type: "main", date };
 
-  io.emit("exit chat", request.session.user);
-  io.users.removeUser(request.session.user);
-  io.emit("add users status", io.users.users);
+  await io.users.removeUser(request.session.user);
+  io.messages.addMessage(message);
+  io.emit("add-main-message", message);
+  io.emit("add-users-status", await io.users.getAllUsers());
 
   request.session.destroy();
   response.redirect("/");

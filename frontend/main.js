@@ -5,7 +5,7 @@ import "./assets/css/style.css";
 
 import Register from "./modules/Register";
 import Login from "./modules/Login";
-import chat from "./chat";
+import chat from "./chatSocket";
 
 const registerForm = document.querySelector("#register-form");
 const loginForm = document.querySelector("#login-form");
