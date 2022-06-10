@@ -17,15 +17,7 @@ exports.login = async (request, response) => {
     }
 
     if (login.user) {
-      const io = request.app.get("io");
-      const date = new Date();
       const user = { name: login.user.name, email: login.user.email };
-      const message = { user, text: "entrou no chat", type: "main", date };
-
-      io.users.addUser({ ...user, status: "Online" });
-      io.messages.addMessage(message);
-      io.emit("add-main-message", message);
-
       request.session.user = user;
       request.session.save(() => response.redirect("/chat"));
       return;
@@ -38,8 +30,7 @@ exports.login = async (request, response) => {
 
 exports.logout = async (request, response) => {
   const io = request.app.get("io");
-  const date = new Date();
-  const message = { user: request.session.user, text: "saiu do chat", type: "main", date };
+  const message = { user: request.session.user, text: "saiu do chat", type: "main", date: new Date() };
 
   await io.users.removeUser(request.session.user);
   io.messages.addMessage(message);

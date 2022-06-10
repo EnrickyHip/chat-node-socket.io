@@ -17,17 +17,8 @@ exports.register = async (request, response) => {
     }
 
     if (register.user) {
-      request.session.user = register.user;
-
-      const io = request.app.get("io");
-      const date = new Date();
       const user = { name: register.user.name, email: register.user.email };
-      const message = { user, text: "entrou no chat", type: "main", date };
-
-      io.users.addUser({ ...user, status: "Online" });
-      io.messages.addMessage(message);
-      io.emit("add-main-message", message);
-
+      request.session.user = user;
       request.session.save(() => response.redirect("/chat"));
       return;
     }

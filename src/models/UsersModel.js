@@ -11,7 +11,6 @@ const UsersModel = mongoose.model("Users", UsersSchema);
 class Users {
   async addUser(user) {
     if (await this.userIsInChat(user)) return;
-    console.log(user);
     await UsersModel.create(user);
   }
 

@@ -15,24 +15,13 @@ export default function () {
 
   const chat = new Chat(user, socket, messageInput, messageButton, messagesContainer, participantsContainer);
 
-  socket.on("get-all-messages", (messages) => {
-    chat.addOldMessages(messages);
-  });
-
   socket.on("connect", () => {
-    console.log("conectou no server");
-    socket.emit("user-connected", { name: name, email });
+    chat?.cleanMessages();
+    socket.emit("user-connected", user);
   });
 
-  socket.on("add-main-message", (message) => {
-    chat.addMainMessage(message);
-    window.scrollTo(0, document.body.scrollHeight);
-  });
-
-  socket.on("add-message", (message) => {
-    chat.addMessage(message);
-    window.scrollTo(0, document.body.scrollHeight);
-  });
-
+  socket.on("get-all-messages", (messages) => chat.addOldMessages(messages));
+  socket.on("add-main-message", (message) => chat.addMainMessage(message));
+  socket.on("add-message", (message) => chat.addMessage(message));
   socket.on("add-users-status", (users) => chat.addStatus(users));
 }

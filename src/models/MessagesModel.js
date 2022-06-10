@@ -17,7 +17,6 @@ const MessagesModel = moongose.model("Messages", MessagesSchema);
 
 class Messages {
   async addMessage(message) {
-    console.log(message);
     await MessagesModel.create(message);
   }
 

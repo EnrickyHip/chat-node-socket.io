@@ -18,9 +18,8 @@ export default class Chat {
     this.messageInput.focus();
   }
 
-  addMainMessage(message) {
-    if (message.user.name === this.user.name) message.user.name = "Você";
-    this.messagesContainer.innerHTML += `<h6 class="text-center my-2">${message.user.name} ${message.text}</h6>`;
+  cleanMessages() {
+    this.messagesContainer.innerHTML = "";
   }
 
   addStatus(users) {
@@ -38,6 +37,12 @@ export default class Chat {
       if (message.type === "message") return this.addMessage(message);
       return this.addMainMessage(message);
     });
+  }
+
+  addMainMessage(message) {
+    if (message.user.name === this.user.name) message.user.name = "Você";
+    this.messagesContainer.innerHTML += `<h6 class="text-center my-2">${message.user.name} ${message.text}</h6>`;
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   //kinda simulation of jsx idk
@@ -58,6 +63,8 @@ export default class Chat {
           </p>
         </div>
       </div>`;
+
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   sendMessage() {
