@@ -21,7 +21,15 @@ class Messages {
   }
 
   async getAllMessages() {
-    return await MessagesModel.find().sort({ dateCreated: -1 }); //ordena pela data
+    return await MessagesModel.find();
+  }
+
+  async getMessagesFrom(message) {
+    return await MessagesModel.find({ date: { $gte: message.date } }).sort({ date: 1 }); //ordena pela data
+  }
+
+  async getLastEntry(user) {
+    return await MessagesModel.findOne({ "user.email": user.email, type: "main" }).sort({ _id: -1 });
   }
 }
 

@@ -21,12 +21,13 @@ async function connectUser(io, socket, user) {
     const message = { user, text: "entrou no chat", type: "main", date: new Date() };
 
     io.users.addUser(socket.user);
-    io.messages.addMessage(message);
-    io.emit("add-main-message", message);
+    await io.messages.addMessage(message);
+    socket.broadcast.emit("add-main-message", message);
   }
 
   setUserStatus(io, socket, socket.user, "Online");
-  socket.emit("get-all-messages", await io.messages.getAllMessages());
+  const lastEntry = await io.messages.getLastEntry(socket.user);
+  socket.emit("get-all-messages", await io.messages.getMessagesFrom(lastEntry));
 }
 
 async function disconnect(io, socket) {
