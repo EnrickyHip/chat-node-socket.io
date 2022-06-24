@@ -9,7 +9,7 @@ export default class Chat {
     this.user = user;
     this.timer = null;
 
-    this.messageButton.addEventListener("click", this.sendMessage);
+    this.messageButton.addEventListener("click", () => this.sendMessage());
     this.messageInput.addEventListener("input", () => this.typingMessage()); // for some reason it just works with annonymous func
     this.messageInput.addEventListener("keypress", (event) => {
       if (event.key === "Enter") this.sendMessage();
