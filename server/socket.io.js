@@ -36,6 +36,8 @@ async function disconnect(io, socket) {
 }
 
 function sendMessage(io, socket, message) {
+  const date = new Date();
+  message.date = date;
   message.user = { name: socket.user.name, email: socket.user.email }; //overwrites the user sent for meanings of security.
   io.messages.addMessage(message);
   socket.broadcast.emit("add-message", message); //broadcast emits for everyone excepts the user who sent it.

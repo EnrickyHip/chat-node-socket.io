@@ -47,7 +47,7 @@ export default class Chat {
 
   //kinda simulation of jsx idk
   addMessage(message) {
-    message.date = new Date(message.date);
+    message.date = new Date();
     //eslint-disable-next-line
     this.messagesContainer.innerHTML += `
       <div class="d-flex my-1 ${this.user.name === message.user.name ? "justify-content-end" : ""}">
@@ -69,8 +69,7 @@ export default class Chat {
 
   sendMessage() {
     if (this.messageInput.value.length) {
-      const date = new Date();
-      const message = { user: this.user, text: this.messageInput.value, date, type: "message" };
+      const message = { user: this.user, text: this.messageInput.value, type: "message" };
 
       this.addMessage(message);
       this.socket.emit("send-message", message);

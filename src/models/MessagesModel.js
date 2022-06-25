@@ -25,7 +25,7 @@ class Messages {
   }
 
   async getMessagesFrom(message) {
-    return await MessagesModel.find({ date: { $gte: message.date } }).sort({ date: 1 }); //ordena pela data
+    return await MessagesModel.find({ date: { $gte: message.date } }); //ordena pela data
   }
 
   async getLastEntry(user) {
